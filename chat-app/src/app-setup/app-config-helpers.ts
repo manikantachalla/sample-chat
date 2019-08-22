@@ -6,21 +6,20 @@ import thunk from 'redux-thunk'
 //logs all the actions dispatched
 const reduxLogger = process.env.NODE_ENV !== 'production' ? require('redux-logger').logger : undefined
 
-export const makeHistory = (appBasePath: string) => {
-    const history = createBrowserHistory({ basename: appBasePath || undefined })
+// export const makeHistory = (appBasePath: string) => {
+//     const history = createBrowserHistory({ basename: appBasePath || undefined })
 
-    //Took the solution from https://github.com/ReactTraining/react-router/issues/2144#issuecomment-150939358
-    history.listen(location => {
-        // Use setTimeout to make sure this runs after React Router's own listener
-        setTimeout(() => window.scrollTo(0, 0), 0);
-    })
+//     //Took the solution from https://github.com/ReactTraining/react-router/issues/2144#issuecomment-150939358
+//     history.listen(location => {
+//         // Use setTimeout to make sure this runs after React Router's own listener
+//         setTimeout(() => window.scrollTo(0, 0), 0);
+//     })
 
-    return history
-}
+//     return history
+// }
 
-export const makeStoreEnhancer = (history: History) => {
+export const makeStoreEnhancer = () => {
     let middlewares: Middleware[] = [
-        routerMiddleware(history),
         thunk
     ]
 

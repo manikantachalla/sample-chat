@@ -67,7 +67,7 @@ export class ChatScreenComponent extends React.Component<ChatScreenProps, ChatSc
                             </Grid>
                             <Grid xs={12}>
                                 <ol>
-                                    {users.map(user => <li>{user}</li>)}
+                                    {users.map(user => <li key={user}>{user}</li>)}
                                 </ol>
                             </Grid>
                         </Grid>
