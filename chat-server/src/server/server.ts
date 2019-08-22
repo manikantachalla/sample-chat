@@ -1,3 +1,4 @@
+import { MongooseDb } from './../db/connection';
 import '../../set-up'
 
 import express from 'express'
@@ -23,9 +24,9 @@ async function startServer() {
     notFound404(app, html404Path)
     errorMiddleware(app, config)
     const server = http.createServer(app);
-    const messagesStore = new MessagesStore()
+    await MongooseDb.connectDB(config.dbConfig)
     const io = socketIo(server);
-
+    const messagesStore = new MessagesStore()
     const onConnect = async (socket: socketIo.Socket) => {
         const newUserName = getRandomUsername()
         console.log("New client connected " + newUserName);
@@ -33,18 +34,20 @@ async function startServer() {
             messagesStore.removeUser(newUserName)
             console.log("Client disconnected " + newUserName);
         });
-        messagesStore.addUserName(newUserName)
+        await messagesStore.addUserName(newUserName)
+        const oldMessages = await messagesStore.getMessages(10)
+        const users = await messagesStore.getUsers()
         const usernameAndOldMessages: UsernameAndOldMessages = {
             username: newUserName,
-            oldMessages: messagesStore.getMessages(10),
-            users: messagesStore.getUsers()
+            oldMessages,
+            users
         }
         socket.emit(ChatEvent.username, usernameAndOldMessages); // Emitting a new message. It will be consumed by the client
         socket.on(ChatEvent.newMessage, (data: UsernameAndMessage) => {
             messagesStore.addMessage(data)
             io.emit(ChatEvent.messageBroadcast, [data])
         })
-        io.emit(ChatEvent.recentUsers, messagesStore.getUsers())
+        io.emit(ChatEvent.recentUsers, users)
     }
 
     io.on("connection", socket => {

@@ -5,7 +5,7 @@ import { DbConfigModel } from '../server/models'
 export class MongooseDb {
     static db: Mongoose | undefined
     static database = (username: string, password: string) => {
-        return `mongodb+srv://${username}:${password}@cluster0-tozy1.mongodb.net/test?retryWrites=true&w=majority`
+        return `mongodb://localhost:27017/Chat`
     }
 
     static async connectDB(options: DbConfigModel) {

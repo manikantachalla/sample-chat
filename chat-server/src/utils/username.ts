@@ -23,5 +23,5 @@ const personList = [
 
 export const getRandomUsername = (): string => {
     const personListIndex = genRandomInteger(0, personList.length)
-    return personList[personListIndex] + "_" + genRandomInteger(1, 10)
+    return personList[personListIndex] + "_" + genRandomInteger(10, 100)
 }

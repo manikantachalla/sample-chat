@@ -28,7 +28,7 @@ export class MessagesComponent extends React.Component<MessagesProps, MessagesSt
                     {messageList.map((msg, ind) => {
                         const ele1 = <Grid item xs={4} ></Grid>
                         const ele2 = <Grid item xs={8} >
-                            <Card>
+                            <Card> 
                                 <Grid container spacing={1}>
                                     <Grid item xs={12}>
                                         {msg.username}

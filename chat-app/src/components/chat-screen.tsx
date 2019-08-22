@@ -50,7 +50,7 @@ export class ChatScreenComponent extends React.Component<ChatScreenProps, ChatSc
             return <div>Fetching username...</div>
         } else {
             return <Grid container spacing={2}>
-                <Grid xs={12}>
+                <Grid xs={12} item>
                     <h1 style={{ textAlign: "center" }}>Joined as {username}</h1>
                 </Grid>
                 <Grid xs={6} item>
@@ -65,7 +65,7 @@ export class ChatScreenComponent extends React.Component<ChatScreenProps, ChatSc
                             <Grid xs={12} item>
                                 <h2 style={{ textAlign: "center" }}>Recent Users</h2>
                             </Grid>
-                            <Grid xs={12}>
+                            <Grid xs={12} item>
                                 <ol>
                                     {users.map(user => <li key={user}>{user}</li>)}
                                 </ol>

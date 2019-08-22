@@ -25,12 +25,16 @@ const mapDispatchToProps = (dispatch: AppDispatch): ChatScreenDispatchProps => {
             dispatch((dispatch, getState) => {
                 socket = socketIOClient();
                 socket.on("connect", function () {
-                    dispatch(setChatJoined)
+                    //TODO hack
+                    setTimeout(() => dispatch(setChatJoined), 1000)
                 })
                 socket.on(ChatEvent.username, (usernameAndOldMessages: UsernameAndOldMessages) => {
-                    dispatch(saveUsername(usernameAndOldMessages.username))
-                    dispatch(replaceMessageList(usernameAndOldMessages.oldMessages))
-                    dispatch(addOtherUsers(usernameAndOldMessages.users))
+                    //TODO hack
+                    setTimeout(() => {
+                        dispatch(saveUsername(usernameAndOldMessages.username))
+                        dispatch(replaceMessageList(usernameAndOldMessages.oldMessages))
+                        dispatch(addOtherUsers(usernameAndOldMessages.users))
+                    }, 1000)
                 });
                 socket.on(ChatEvent.messageBroadcast, (data: MessageList) => {
                     dispatch(addMessageList(data))
